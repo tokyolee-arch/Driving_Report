@@ -1,17 +1,28 @@
 'use client';
 
-import ScoreRing from '@/components/shared/ScoreRing';
 import Badge from '@/components/shared/Badge';
 
-// ── 핵심 지표 데이터 ──
+// ── 등급 설정 ──
+const GRADE = 'A';
+const GRADE_CONFIG: Record<string, { color: string; glow: string; label: string }> = {
+  A: { color: '#3b82f6', glow: 'rgba(59,130,246,0.3)', label: 'EXCELLENT' },
+  B: { color: '#00d4aa', glow: 'rgba(0,212,170,0.3)', label: 'GOOD' },
+  C: { color: '#f59e0b', glow: 'rgba(245,158,11,0.3)', label: 'FAIR' },
+};
+const gradeInfo = GRADE_CONFIG[GRADE] ?? GRADE_CONFIG.B;
 
-const KEY_METRICS = [
+// ── 차량 기본 정보 ──
+const VEHICLE_INFO = [
   { label: '총 주행거리', value: '35,820', unit: 'km', icon: '📍' },
   { label: '차량 연식', value: '1년 4개월', unit: '', icon: '📅' },
-  { label: '사고이력', value: '0', unit: '건', icon: '🛡️' },
-  { label: '정비이행률', value: '100', unit: '%', icon: '🔧' },
-  { label: '배터리 SOH', value: '94', unit: '%', icon: '🔋' },
-  { label: '평균안전점수', value: '82', unit: '점', icon: '⭐' },
+];
+
+// ── 신뢰 지표 (하나의 블록) ──
+const TRUST_METRICS = [
+  { label: '사고이력', value: '0', unit: '건', icon: '🛡️', color: '#00d4aa' },
+  { label: '정비이행률', value: '100', unit: '%', icon: '🔧', color: '#3b82f6' },
+  { label: '배터리 헬스', value: '94', unit: '%', icon: '🔋', color: '#22c55e' },
+  { label: '안전운전점수', value: '82', unit: '점', icon: '⭐', color: '#f59e0b' },
 ];
 
 // ── 가치 상승 요인 ──
@@ -19,7 +30,7 @@ const KEY_METRICS = [
 const VALUE_FACTORS = [
   { factor: '무사고 이력 인증', impact: '+150만원' },
   { factor: '정비이행률 100%', impact: '+95만원' },
-  { factor: '배터리 SOH 94%', impact: '+120만원' },
+  { factor: '배터리 헬스 94%', impact: '+120만원' },
   { factor: '안전점수 A등급', impact: '+50만원' },
 ];
 
@@ -28,21 +39,56 @@ const VALUE_FACTORS = [
 export default function VehicleValueTab() {
   return (
     <div className="flex flex-col gap-3">
-      {/* ── 1. Vehicle Trust Score 히어로 ── */}
+      {/* ── 1. Vehicle Trust Grade 히어로 ── */}
       <div
         className="rounded-xl p-6 border border-white/[0.06] flex flex-col items-center"
         style={{
           background: 'linear-gradient(180deg, #111d33 0%, #0f1a2e 100%)',
         }}
       >
-        <p className="text-[10px] text-gray-500 tracking-[0.25em] font-semibold mb-4">
-          VEHICLE TRUST SCORE
+        <p className="text-[10px] text-gray-500 tracking-[0.25em] font-semibold mb-5">
+          VEHICLE TRUST GRADE
         </p>
 
-        <ScoreRing score={91} size={140} color="#3b82f6" />
+        {/* 등급 뱃지 */}
+        <div className="relative flex items-center justify-center">
+          {/* 글로우 배경 */}
+          <div
+            className="absolute w-32 h-32 rounded-full"
+            style={{
+              background: `radial-gradient(circle, ${gradeInfo.glow} 0%, transparent 70%)`,
+            }}
+          />
+          {/* 원형 테두리 */}
+          <div
+            className="relative w-28 h-28 rounded-full border-[3px] flex items-center justify-center"
+            style={{ borderColor: `${gradeInfo.color}40` }}
+          >
+            {/* 내부 원 */}
+            <div
+              className="w-[88px] h-[88px] rounded-full flex flex-col items-center justify-center"
+              style={{
+                background: `linear-gradient(135deg, ${gradeInfo.color}15, ${gradeInfo.color}08)`,
+              }}
+            >
+              <span
+                className="text-5xl font-black leading-none"
+                style={{ color: gradeInfo.color }}
+              >
+                {GRADE}
+              </span>
+              <span
+                className="text-[8px] font-bold tracking-[0.15em] mt-1"
+                style={{ color: gradeInfo.color }}
+              >
+                GRADE
+              </span>
+            </div>
+          </div>
+        </div>
 
-        <div className="mt-4">
-          <Badge text="CERTIFIED EXCELLENT" color="#3b82f6" />
+        <div className="mt-5">
+          <Badge text={`CERTIFIED ${gradeInfo.label}`} color={gradeInfo.color} />
         </div>
 
         <p className="mt-2 text-[10px] text-gray-600">
@@ -50,9 +96,9 @@ export default function VehicleValueTab() {
         </p>
       </div>
 
-      {/* ── 2. 핵심 지표 Grid (2×3) ── */}
+      {/* ── 2. 차량 기본 정보 (2열) ── */}
       <div className="grid grid-cols-2 gap-2">
-        {KEY_METRICS.map((m) => (
+        {VEHICLE_INFO.map((m) => (
           <div
             key={m.label}
             className="bg-ivi-surfaceLight rounded-xl px-4 py-3 border border-white/[0.06]"
@@ -71,6 +117,32 @@ export default function VehicleValueTab() {
             </p>
           </div>
         ))}
+      </div>
+
+      {/* ── 3. 차량 신뢰 지표 (하나의 블록) ── */}
+      <div className="bg-ivi-surfaceLight rounded-xl p-4 border border-white/[0.06]">
+        <h3 className="text-sm font-bold text-gray-100 mb-3">
+          🏅 차량 신뢰 지표
+        </h3>
+        <div className="grid grid-cols-4 gap-2">
+          {TRUST_METRICS.map((m) => (
+            <div key={m.label} className="flex flex-col items-center text-center gap-1.5">
+              <div
+                className="w-10 h-10 rounded-full flex items-center justify-center text-base"
+                style={{ backgroundColor: `${m.color}15` }}
+              >
+                {m.icon}
+              </div>
+              <p className="text-lg font-extrabold text-gray-100 leading-none">
+                {m.value}
+                {m.unit && (
+                  <span className="text-[9px] font-normal text-gray-500">{m.unit}</span>
+                )}
+              </p>
+              <p className="text-[9px] text-gray-500 leading-tight">{m.label}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* ── 3. 예상 시세 카드 ── */}

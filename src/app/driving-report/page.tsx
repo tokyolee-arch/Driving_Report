@@ -11,7 +11,7 @@ import VehicleValueTab from '@/components/driving-report/VehicleValueTab';
 const TABS = [
   { icon: '🚗', label: '주행요약' },
   { icon: '🛡️', label: '안전점수' },
-  { icon: '🔧', label: '차량관리' },
+  { icon: '🔧', label: 'Service' },
   { icon: '💎', label: '차량가치' },
 ];
 

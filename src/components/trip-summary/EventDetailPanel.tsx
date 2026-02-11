@@ -77,6 +77,16 @@ export default function EventDetailPanel({
           <p className="text-[10px] text-gray-600 truncate">{event.location}</p>
         </div>
 
+        {/* 달성(good) 리워드 뱃지 */}
+        {event.type === 'good' && (
+          <div className="shrink-0 flex items-center gap-1 px-2 py-1 rounded-full bg-ivi-accent/15 border border-ivi-accent/30">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#00d4aa" stroke="none">
+              <path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16.4l-6.4 4.8 2.4-7.2-6-4.8h7.6z" />
+            </svg>
+            <span className="text-[9px] font-bold text-ivi-accent">달성</span>
+          </div>
+        )}
+
         {/* 토글 화살표 */}
         <svg
           width="14"

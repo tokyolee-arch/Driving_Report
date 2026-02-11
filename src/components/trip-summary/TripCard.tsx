@@ -21,6 +21,8 @@ export default function TripCard({
   dateLabel,
   dayLabel,
 }: TripCardProps) {
+  const noTrip = trip.distance === 0 && trip.duration === 0;
+
   return (
     <div className="bg-ivi-surfaceLight rounded-xl p-4 border border-white/[0.06]">
       {/* ── 상단: 제목 + Badge ── */}
@@ -30,48 +32,57 @@ export default function TripCard({
             ? '🚗 오늘 주행'
             : `🚗 ${dateLabel} (${dayLabel}) 주행`}
         </h3>
-        <Badge
-          text={isToday ? '최근' : dateLabel}
-          color={isToday ? '#00d4aa' : '#3b82f6'}
-        />
+        {noTrip ? (
+          <Badge text="주행 없음" color="#6b7280" />
+        ) : (
+          <Badge
+            text={isToday ? '최근' : dateLabel}
+            color={isToday ? '#00d4aa' : '#3b82f6'}
+          />
+        )}
       </div>
 
-      {/* ── 중단: 경로 표시 ── */}
-      <div className="flex gap-3 mb-4">
-        {/* 좌측: 도트 + 세로선 */}
-        <div className="flex flex-col items-center py-0.5">
-          {/* 출발 도트 (accent 채워진 원) */}
-          <div className="w-2.5 h-2.5 rounded-full bg-ivi-accent shadow-[0_0_6px_rgba(0,212,170,0.4)]" />
-          {/* 세로 연결선 */}
-          <div className="w-px flex-1 my-1 bg-gradient-to-b from-ivi-accent/40 to-ivi-info/40" />
-          {/* 도착 도트 (info 빈 원) */}
-          <div className="w-2.5 h-2.5 rounded-full border-2 border-ivi-info shadow-[0_0_6px_rgba(59,130,246,0.3)]" />
+      {noTrip ? (
+        /* ── 주행기록 없는 날 ── */
+        <div className="py-6 flex flex-col items-center gap-2">
+          <span className="text-2xl">🅿️</span>
+          <p className="text-sm text-gray-500">이 날은 주행 기록이 없습니다</p>
+          {trip.safetyScore > 0 && (
+            <p className="text-[11px] text-gray-600">
+              누적 안전점수 <span className="text-ivi-accent font-semibold">{trip.safetyScore}점</span>
+            </p>
+          )}
         </div>
+      ) : (
+        <>
+          {/* ── 중단: 경로 표시 ── */}
+          <div className="flex gap-3 mb-4">
+            <div className="flex flex-col items-center py-0.5">
+              <div className="w-2.5 h-2.5 rounded-full bg-ivi-accent shadow-[0_0_6px_rgba(0,212,170,0.4)]" />
+              <div className="w-px flex-1 my-1 bg-gradient-to-b from-ivi-accent/40 to-ivi-info/40" />
+              <div className="w-2.5 h-2.5 rounded-full border-2 border-ivi-info shadow-[0_0_6px_rgba(59,130,246,0.3)]" />
+            </div>
+            <div className="flex flex-col justify-between min-h-[44px]">
+              <span className="text-sm font-semibold text-gray-100">{trip.from}</span>
+              <span className="text-sm font-semibold text-gray-100">{trip.to}</span>
+            </div>
+          </div>
 
-        {/* 우측: 출발지 / 목적지 */}
-        <div className="flex flex-col justify-between min-h-[44px]">
-          <span className="text-sm font-semibold text-gray-100">
-            {trip.from}
-          </span>
-          <span className="text-sm font-semibold text-gray-100">
-            {trip.to}
-          </span>
-        </div>
-      </div>
-
-      {/* ── 하단: 4칸 그리드 (360px에서 2칸 폴백) ── */}
-      <div className="grid grid-cols-2 min-[400px]:grid-cols-4 gap-2">
-        <MetricCell icon="📍" label="거리" value={`${trip.distance}`} unit="km" />
-        <MetricCell icon="⏱" label="시간" value={formatDuration(trip.duration)} />
-        <MetricCell icon="⚡" label="효율" value={`${trip.energyEfficiency}`} unit="kWh" />
-        <MetricCell
-          icon="🔋"
-          label="소비"
-          value={`${trip.energyConsumed}`}
-          unit="kWh"
-          sub={`₩${trip.estimatedCost.toLocaleString()}`}
-        />
-      </div>
+          {/* ── 하단: 4칸 그리드 ── */}
+          <div className="grid grid-cols-2 min-[400px]:grid-cols-4 gap-2">
+            <MetricCell icon="📍" label="거리" value={`${trip.distance}`} unit="km" />
+            <MetricCell icon="⏱" label="시간" value={formatDuration(trip.duration)} />
+            <MetricCell icon="⚡" label="효율" value={`${trip.energyEfficiency}`} unit="kWh" />
+            <MetricCell
+              icon="🔋"
+              label="소비"
+              value={`${trip.energyConsumed}`}
+              unit="kWh"
+              sub={`₩${trip.estimatedCost.toLocaleString()}`}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 }

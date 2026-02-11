@@ -95,37 +95,47 @@ export default function WeeklyChart({
     });
   }, [weekStart]);
 
-  // 하단 요약 계산
+  // 하단 요약 계산 (주행 없는 날 0 값은 평균/최고에서 제외)
   const summary = useMemo(() => {
-    const total = values.reduce((a, b) => a + b, 0);
-    const avg = total / values.length;
     const selected = values[selectedDay];
-    const best = metric.lowerBetter ? Math.min(...values) : Math.max(...values);
+    const isNoTrip = metricIndex !== 4 && selected === 0; // 운전점수 제외, 0이면 주행 없음
+
+    // 0이 아닌 값만 필터 (운전점수는 제외)
+    const activeValues = metricIndex === 4
+      ? values
+      : values.filter((v) => v > 0);
+    const total = activeValues.reduce((a, b) => a + b, 0);
+    const avg = activeValues.length > 0 ? total / activeValues.length : 0;
+    const best = activeValues.length > 0
+      ? (metric.lowerBetter ? Math.min(...activeValues) : Math.max(...activeValues))
+      : 0;
+
+    const selStr = isNoTrip ? '-' : undefined;
 
     switch (metricIndex) {
       case 0:
         return [
           { label: '주간 총 거리', value: `${total.toFixed(1)}km` },
           { label: '일 평균', value: `${avg.toFixed(1)}km` },
-          { label: '선택일', value: `${selected.toFixed(1)}km` },
+          { label: '선택일', value: selStr ?? `${selected.toFixed(1)}km` },
         ];
       case 1:
         return [
           { label: '주간 평균', value: `${avg.toFixed(1)}kWh` },
           { label: '최고 효율', value: `${best.toFixed(1)}kWh` },
-          { label: '선택일', value: `${selected.toFixed(1)}kWh` },
+          { label: '선택일', value: selStr ?? `${selected.toFixed(1)}kWh` },
         ];
       case 2:
         return [
           { label: '주간 총 소비', value: `${total.toFixed(1)}kWh` },
           { label: '일 평균', value: `${avg.toFixed(1)}kWh` },
-          { label: '선택일', value: `${selected.toFixed(1)}kWh` },
+          { label: '선택일', value: selStr ?? `${selected.toFixed(1)}kWh` },
         ];
       case 3:
         return [
           { label: '주간 평균', value: `${avg.toFixed(0)}점` },
           { label: '최고 점수', value: `${best.toFixed(0)}점` },
-          { label: '선택일', value: `${selected.toFixed(0)}점` },
+          { label: '선택일', value: selStr ?? `${selected.toFixed(0)}점` },
         ];
       case 4:
         return [

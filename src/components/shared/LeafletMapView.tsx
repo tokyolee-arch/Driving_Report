@@ -43,10 +43,10 @@ export default function LeafletMapView({ lat, lng, label, address }: LeafletMapV
         const map = L.map(containerRef.current, {
           center: [lat, lng],
           zoom: 15,
-          zoomControl: false,
+          zoomControl: true,
           attributionControl: false,
           dragging: true,
-          scrollWheelZoom: false,
+          scrollWheelZoom: true,
         });
 
         // OpenStreetMap 타일 (무료, 키 불필요)
