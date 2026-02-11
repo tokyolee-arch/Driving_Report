@@ -227,7 +227,7 @@ export default function VehicleValueTab() {
           📄 리포트 공유
         </button>
 
-        {/* 중고차 연동 (outline) */}
+        {/* 중고차 플랫폼 등록 (outline) */}
         <button
           aria-label="중고차 플랫폼 연동하기"
           className="flex-1 py-3 rounded-xl text-sm font-bold
@@ -235,7 +235,7 @@ export default function VehicleValueTab() {
                      bg-white/[0.02] hover:bg-white/[0.06]
                      transition-all duration-200 active:scale-[0.98]"
         >
-          🔗 중고차 연동
+          🔗 중고차 플랫폼 등록
         </button>
       </div>
     </div>
