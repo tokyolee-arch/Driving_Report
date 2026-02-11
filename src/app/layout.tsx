@@ -12,9 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
-      <body className="bg-ivi-bg text-gray-200 antialiased">
-        <div className="mx-auto max-w-ivi min-h-screen">
+    <html lang="ko" className="h-full">
+      <body className="min-h-full w-full bg-ivi-bg text-gray-200 antialiased">
+        <div className="mx-auto w-full min-h-screen max-w-ivi">
           {children}
         </div>
       </body>

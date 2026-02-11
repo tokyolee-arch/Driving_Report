@@ -75,7 +75,7 @@ export default function DrivingReportPage() {
   }, [activeTab]);
 
   return (
-    <div className="max-w-[480px] mx-auto min-h-screen bg-ivi-bg flex flex-col">
+    <div className="w-full min-h-screen bg-ivi-bg flex flex-col">
       {/* ── Header (sticky) ── */}
       <header className="sticky top-0 z-30 bg-ivi-bg/80 backdrop-blur-md border-b border-white/[0.04]">
         <div className="px-5 pt-4 pb-3">
@@ -169,7 +169,7 @@ export default function DrivingReportPage() {
 
       {/* ── Content (fade-in on tab switch) ── */}
       <main
-        className="flex-1 px-4 py-3 animate-fade-in"
+        className="flex-1 min-h-0 overflow-y-auto px-4 py-3 animate-fade-in"
         key={activeTab}
         role="tabpanel"
         id={`tabpanel-${activeTab}`}
