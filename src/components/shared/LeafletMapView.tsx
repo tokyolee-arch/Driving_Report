@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import type L from 'leaflet';
 
 interface LeafletMapViewProps {
   lat: number;
