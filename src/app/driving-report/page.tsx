@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import TripSummaryTab from '@/components/driving-report/TripSummaryTab';
-import SafetyScoreTab from '@/components/driving-report/SafetyScoreTab';
+import DriveCheckupTab from '@/components/driving-report/DriveCheckupTab';
 import VehicleManagementTab from '@/components/driving-report/VehicleManagementTab';
 import VehicleValueTab from '@/components/driving-report/VehicleValueTab';
 
@@ -10,7 +10,7 @@ import VehicleValueTab from '@/components/driving-report/VehicleValueTab';
 
 const TABS = [
   { icon: '🚗', label: '주행요약' },
-  { icon: '🛡️', label: '안전점수' },
+  { icon: '🏥', label: 'Checkup' },
   { icon: '🔧', label: 'Service' },
   { icon: '💎', label: '차량가치' },
 ];
@@ -34,7 +34,7 @@ function TabContent({ index }: { index: number }) {
     case 0:
       return <TripSummaryTab />;
     case 1:
-      return <SafetyScoreTab />;
+      return <DriveCheckupTab />;
     case 2:
       return <VehicleManagementTab />;
     case 3:
