@@ -72,9 +72,12 @@ interface ServiceRecord {
   center: string;
   date: string;
   items: string[];
+  itemCosts: number[];
   totalCost: number;
   icon: string;
-  receiptUrl: string;
+  receiptNo: string;
+  tel: string;
+  addr: string;
 }
 
 const SERVICE_RECORDS: ServiceRecord[] = [
@@ -82,41 +85,56 @@ const SERVICE_RECORDS: ServiceRecord[] = [
     center: '현대 강남 서비스센터',
     date: '2026-01-15',
     items: ['엔진오일 교체', '오일필터 교체', '차량 점검'],
+    itemCosts: [65000, 25000, 35000],
     totalCost: 125000,
     icon: '🛢️',
-    receiptUrl: 'https://picsum.photos/seed/receipt1/400/560',
+    receiptNo: 'GN-2026-00142',
+    tel: '02-555-1234',
+    addr: '서울시 강남구 테헤란로 152',
   },
   {
     center: '현대 분당 서비스센터',
     date: '2025-11-22',
     items: ['에어컨 필터 교체', '실내 항균 세정'],
+    itemCosts: [35000, 20000],
     totalCost: 55000,
     icon: '❄️',
-    receiptUrl: 'https://picsum.photos/seed/receipt2/400/560',
+    receiptNo: 'BD-2025-00891',
+    tel: '031-712-5678',
+    addr: '경기도 성남시 분당구 정자일로 8',
   },
   {
     center: '현대 수원 서비스센터',
     date: '2025-09-10',
     items: ['종합점검', '엔진오일 교체', '브레이크액 보충', '타이어 공기압 조정'],
+    itemCosts: [50000, 65000, 45000, 25000],
     totalCost: 185000,
     icon: '🔧',
-    receiptUrl: 'https://picsum.photos/seed/receipt3/400/560',
+    receiptNo: 'SW-2025-00567',
+    tel: '031-245-9012',
+    addr: '경기도 수원시 영통구 월드컵로 206',
   },
   {
     center: '현대 용인 서비스센터',
     date: '2025-07-05',
     items: ['타이어 로테이션', '휠 얼라인먼트'],
+    itemCosts: [30000, 30000],
     totalCost: 60000,
     icon: '🛞',
-    receiptUrl: 'https://picsum.photos/seed/receipt4/400/560',
+    receiptNo: 'YI-2025-00334',
+    tel: '031-338-3456',
+    addr: '경기도 용인시 수지구 포은대로 435',
   },
   {
     center: '현대 강남 서비스센터',
     date: '2025-05-18',
     items: ['와이퍼 블레이드 교체'],
+    itemCosts: [25000],
     totalCost: 25000,
     icon: '🌧️',
-    receiptUrl: 'https://picsum.photos/seed/receipt5/400/560',
+    receiptNo: 'GN-2025-00098',
+    tel: '02-555-1234',
+    addr: '서울시 강남구 테헤란로 152',
   },
 ];
 
@@ -146,7 +164,7 @@ function summarizeItems(items: string[]): string {
 // ── 컴포넌트 ──
 export default function VehicleManagementTab() {
   const [expandedRecord, setExpandedRecord] = useState<number | null>(null);
-  const [receiptImage, setReceiptImage] = useState<string | null>(null);
+  const [receiptIndex, setReceiptIndex] = useState<number | null>(null);
 
   return (
     <div className="flex flex-col gap-3">
@@ -340,7 +358,7 @@ export default function VehicleManagementTab() {
                         ))}
                       </div>
                       <button
-                        onClick={(e) => { e.stopPropagation(); setReceiptImage(rec.receiptUrl); }}
+                        onClick={(e) => { e.stopPropagation(); setReceiptIndex(i); }}
                         className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg
                           bg-ivi-accent/10 border border-ivi-accent/20
                           text-[11px] font-semibold text-ivi-accent
@@ -398,37 +416,116 @@ export default function VehicleManagementTab() {
         </button>
       </div>
 
-      {/* ── 영수증 이미지 모달 ── */}
-      {receiptImage && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-6"
-          onClick={() => setReceiptImage(null)}
-        >
+      {/* ── 영수증 모달 ── */}
+      {receiptIndex !== null && (() => {
+        const rec = RECENT_RECORDS[receiptIndex];
+        const dt = formatDateLarge(rec.date);
+        const vat = Math.round(rec.totalCost * 0.1);
+        return (
           <div
-            className="relative bg-white rounded-2xl overflow-hidden shadow-2xl max-w-sm w-full"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+            onClick={() => setReceiptIndex(null)}
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200">
-              <span className="text-sm font-bold text-gray-900">영수증 · 계산서</span>
-              <button
-                onClick={() => setReceiptImage(null)}
-                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+            <div
+              className="relative w-full max-w-xs overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* 영수증 본체 */}
+              <div className="bg-white rounded-t-2xl px-5 pt-5 pb-6">
+                {/* 닫기 */}
+                <button
+                  onClick={() => setReceiptIndex(null)}
+                  className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+
+                {/* 헤더 */}
+                <div className="text-center mb-4">
+                  <p className="text-[10px] text-gray-400 tracking-widest mb-1">정비 영수증</p>
+                  <p className="text-sm font-extrabold text-gray-900">{rec.center}</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">{rec.addr}</p>
+                  <p className="text-[10px] text-gray-400">TEL {rec.tel}</p>
+                </div>
+
+                {/* 구분선 */}
+                <div className="border-t border-dashed border-gray-300 my-3" />
+
+                {/* 영수증 정보 */}
+                <div className="flex justify-between text-[10px] text-gray-500 mb-1">
+                  <span>영수증 번호</span>
+                  <span className="font-mono">{rec.receiptNo}</span>
+                </div>
+                <div className="flex justify-between text-[10px] text-gray-500 mb-1">
+                  <span>정비 일자</span>
+                  <span>{dt.year}.{dt.month}.{dt.day}</span>
+                </div>
+                <div className="flex justify-between text-[10px] text-gray-500 mb-1">
+                  <span>차량번호</span>
+                  <span>12가 3456</span>
+                </div>
+
+                {/* 구분선 */}
+                <div className="border-t border-dashed border-gray-300 my-3" />
+
+                {/* 항목 목록 */}
+                <div className="mb-1">
+                  <div className="flex justify-between text-[10px] font-bold text-gray-700 mb-2">
+                    <span>정비 항목</span>
+                    <span>금액</span>
+                  </div>
+                  {rec.items.map((item, j) => (
+                    <div key={j} className="flex justify-between text-[11px] text-gray-600 py-1">
+                      <span>{item}</span>
+                      <span className="font-mono">₩{rec.itemCosts[j].toLocaleString()}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 구분선 */}
+                <div className="border-t border-dashed border-gray-300 my-3" />
+
+                {/* 합계 */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[10px] text-gray-500">
+                    <span>공급가액</span>
+                    <span className="font-mono">₩{(rec.totalCost - vat).toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-[10px] text-gray-500">
+                    <span>부가세 (10%)</span>
+                    <span className="font-mono">₩{vat.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between text-sm font-extrabold text-gray-900 pt-1">
+                    <span>합계</span>
+                    <span className="font-mono">₩{rec.totalCost.toLocaleString()}</span>
+                  </div>
+                </div>
+
+                {/* 구분선 */}
+                <div className="border-t border-dashed border-gray-300 my-3" />
+
+                {/* 하단 */}
+                <div className="text-center">
+                  <p className="text-[10px] text-gray-400">결제수단: 신용카드</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">현대자동차 공식 서비스센터</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">감사합니다</p>
+                </div>
+              </div>
+
+              {/* 영수증 하단 톱니 모양 */}
+              <svg viewBox="0 0 320 12" className="w-full" preserveAspectRatio="none">
+                <path
+                  d="M0,0 L8,12 L16,0 L24,12 L32,0 L40,12 L48,0 L56,12 L64,0 L72,12 L80,0 L88,12 L96,0 L104,12 L112,0 L120,12 L128,0 L136,12 L144,0 L152,12 L160,0 L168,12 L176,0 L184,12 L192,0 L200,12 L208,0 L216,12 L224,0 L232,12 L240,0 L248,12 L256,0 L264,12 L272,0 L280,12 L288,0 L296,12 L304,0 L312,12 L320,0"
+                  fill="white"
+                />
+              </svg>
             </div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={receiptImage}
-              alt="영수증 이미지"
-              className="w-full object-contain max-h-[70vh]"
-            />
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* ── 6. 사용자 매뉴얼 버튼 ── */}
       <button
