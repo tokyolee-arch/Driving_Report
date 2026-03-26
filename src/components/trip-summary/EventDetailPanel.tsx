@@ -71,10 +71,10 @@ export default function EventDetailPanel({
 
         {/* 이벤트명 + 위치 */}
         <div className="flex-1 min-w-0">
-          <p className="text-xs font-semibold text-gray-200 truncate">
+          <p className="text-xs font-semibold text-gray-800 truncate">
             {event.title}
           </p>
-          <p className="text-[10px] text-gray-600 truncate">{event.location}</p>
+          <p className="text-[10px] text-gray-400 truncate">{event.location}</p>
         </div>
 
         {/* 달성(good) 리워드 뱃지 */}
@@ -98,7 +98,7 @@ export default function EventDetailPanel({
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden="true"
-          className={`text-gray-600 shrink-0 transition-transform duration-300 ${
+          className={`text-gray-400 shrink-0 transition-transform duration-300 ${
             isExpanded ? 'rotate-180' : ''
           }`}
         >

@@ -59,7 +59,7 @@ function CheckupBar({
             className="h-full"
             style={{
               width: `${minGood}%`,
-              background: 'linear-gradient(90deg, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0.35) 100%)',
+              background: 'linear-gradient(90deg, rgba(59,130,246,0.2) 0%, rgba(59,130,246,0.4) 100%)',
             }}
           />
           {/* 적정 구간 */}
@@ -67,15 +67,15 @@ function CheckupBar({
             className="h-full"
             style={{
               width: `${maxGood - minGood}%`,
-              background: 'linear-gradient(90deg, rgba(0,212,170,0.35) 0%, rgba(0,212,170,0.55) 50%, rgba(0,212,170,0.35) 100%)',
-              boxShadow: 'inset 0 0 8px rgba(0,212,170,0.2)',
+              background: 'linear-gradient(90deg, rgba(0,212,170,0.4) 0%, rgba(0,212,170,0.6) 50%, rgba(0,212,170,0.4) 100%)',
+              boxShadow: 'inset 0 0 8px rgba(0,212,170,0.3)',
             }}
           />
           {/* 과다 구간 */}
           <div
             className="h-full flex-1"
             style={{
-              background: 'linear-gradient(90deg, rgba(239,68,68,0.25) 0%, rgba(239,68,68,0.45) 100%)',
+              background: 'linear-gradient(90deg, rgba(239,68,68,0.3) 0%, rgba(239,68,68,0.5) 100%)',
             }}
           />
         </div>
@@ -93,7 +93,7 @@ function CheckupBar({
 
         {/* 현재 위치 마커 */}
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full border-[2.5px] border-white z-10 transition-all duration-500"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-5 h-5 rounded-full border-[2.5px] border-gray-200 z-10 transition-all duration-500"
           style={{
             left: `${clampedPos}%`,
             backgroundColor: markerColor,
@@ -111,7 +111,7 @@ function CheckupBar({
         >
           적정구간
         </span>
-        <span className="text-[10px] font-medium text-red-400">과다</span>
+        <span className="text-[10px] font-medium text-red-600">과다</span>
       </div>
     </div>
   );
@@ -144,8 +144,8 @@ function StatusBadge({ status }: { status: CheckupStatus }) {
 function CheckupCard({ item }: { item: CheckupItem }) {
   return (
     <div
-      className="rounded-xl border border-white/[0.07] overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #1a2235 0%, #111827 100%)' }}
+      className="rounded-xl border border-gray-200 overflow-hidden"
+      style={{ background: '#ffffff' }}
     >
       <div className="px-4 pt-4 pb-3">
         {/* 헤더 */}
@@ -153,8 +153,8 @@ function CheckupCard({ item }: { item: CheckupItem }) {
           <div className="flex items-center gap-2">
             <span className="text-xl" aria-hidden="true">{item.icon}</span>
             <div>
-              <h3 className="text-sm font-bold text-gray-100 leading-tight">{item.title}</h3>
-              <p className="text-[10px] text-gray-600 leading-tight">{item.titleEn}</p>
+              <h3 className="text-sm font-bold text-gray-900 leading-tight">{item.title}</h3>
+              <p className="text-[10px] text-gray-400 leading-tight">{item.titleEn}</p>
             </div>
           </div>
           <StatusBadge status={item.status} />
@@ -170,11 +170,11 @@ function CheckupCard({ item }: { item: CheckupItem }) {
 
         {/* 보조 기준값 (거리성향 등) */}
         {item.subNote && (
-          <p className="text-[9px] text-gray-600 text-center -mt-0.5 mb-1">{item.subNote}</p>
+          <p className="text-[9px] text-gray-400 text-center -mt-0.5 mb-1">{item.subNote}</p>
         )}
 
         {/* 현재 값 */}
-        <p className="text-[12px] text-gray-300 mt-2 font-medium">
+        <p className="text-[12px] text-gray-700 mt-2 font-medium">
           <span className="text-[10px] text-gray-500 mr-1">현재</span>
           {item.displayValue}
         </p>
@@ -184,9 +184,9 @@ function CheckupCard({ item }: { item: CheckupItem }) {
       {item.tip && item.status !== 'good' && (
         <div
           className="mx-4 mb-4 px-3 py-2 rounded-lg border-l-2 border-amber-500/70"
-          style={{ background: 'rgba(245,158,11,0.08)' }}
+          style={{ background: 'rgba(245,158,11,0.06)' }}
         >
-          <p className="text-[11px] text-amber-300 leading-relaxed">
+          <p className="text-[11px] text-amber-600 leading-relaxed">
             <span className="mr-1">💡</span>
             {item.tip}
           </p>
@@ -315,14 +315,14 @@ export default function DriveCheckupTab() {
     <div className="flex flex-col gap-3">
       {/* ── 헤더 카드 ── */}
       <div
-        className="rounded-xl px-5 py-4 border border-white/[0.06] flex items-center justify-between"
-        style={{ background: 'linear-gradient(135deg, #1a2235 0%, #0f1a2e 100%)' }}
+        className="rounded-xl px-5 py-4 border border-gray-200 flex items-center justify-between"
+        style={{ background: '#ffffff' }}
       >
         <div>
-          <p className="text-[9px] text-gray-600 tracking-[0.2em] font-medium mb-0.5">
+          <p className="text-[9px] text-gray-400 tracking-[0.2em] font-medium mb-0.5">
             DRIVE CHECKUP
           </p>
-          <h2 className="text-base font-bold text-gray-100">주행 습관 건강검진</h2>
+          <h2 className="text-base font-bold text-gray-800">주행 습관 건강검진</h2>
           <p className="text-[11px] text-gray-500 mt-0.5">{weekRange}</p>
         </div>
         <div className="flex flex-col items-center gap-1">
@@ -337,10 +337,10 @@ export default function DriveCheckupTab() {
                 : 'rgba(239,68,68,0.1)',
             }}
           >
-            <span className="text-xl font-extrabold text-gray-100 leading-none">{goodCount}</span>
+            <span className="text-xl font-extrabold text-gray-900 leading-none">{goodCount}</span>
             <span className="text-[9px] text-gray-500 leading-tight">/ 4 양호</span>
           </div>
-          <p className="text-[9px] text-gray-600">4개 항목 분석</p>
+          <p className="text-[9px] text-gray-400">4개 항목 분석</p>
         </div>
       </div>
 
@@ -350,7 +350,7 @@ export default function DriveCheckupTab() {
       ))}
 
       {/* ── 안내 문구 ── */}
-      <p className="text-[10px] text-gray-700 text-center pb-2">
+      <p className="text-[10px] text-gray-400 text-center pb-2">
         * 정체 구간(40 km/h 미만)은 거리성향 계산에서 제외됩니다
       </p>
     </div>

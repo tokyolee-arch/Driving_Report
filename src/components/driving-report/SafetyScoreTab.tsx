@@ -75,9 +75,9 @@ const TIPS: Record<string, { title: string; tips: string[] }> = {
 
 // ── 보험사 데이터 ──
 const INSURERS = [
-  { name: '삼성화재', discount: 12, color: '#3b82f6', bg: '#1e3a5f' },
-  { name: '현대해상', discount: 9, color: '#00d4aa', bg: '#0d3d30' },
-  { name: 'DB손보', discount: 11, color: '#a78bfa', bg: '#2d2052' },
+  { name: '삼성화재', discount: 12, color: '#3b82f6', bg: '#eff6ff' },
+  { name: '현대해상', discount: 9, color: '#00d4aa', bg: '#ecfdf5' },
+  { name: 'DB손보', discount: 11, color: '#a78bfa', bg: '#f5f3ff' },
 ];
 
 // ── 이벤트 횟수 → 점수 변환 (횟수가 적을수록 높은 점수) ──
@@ -184,9 +184,9 @@ export default function SafetyScoreTab() {
     <div className="flex flex-col gap-3">
       {/* ── 1. 종합 안전점수 카드 ── */}
       <div
-        className="rounded-xl p-6 border border-white/[0.06] flex flex-col items-center"
+        className="rounded-xl p-6 border border-gray-200 flex flex-col items-center"
         style={{
-          background: 'linear-gradient(180deg, #1a2235 0%, #0f1a2e 100%)',
+          background: 'linear-gradient(180deg, #F9FAFB 0%, #F3F4F6 100%)',
         }}
       >
         <ScoreRing score={overallScore} size={160} />
@@ -196,7 +196,7 @@ export default function SafetyScoreTab() {
         </div>
 
         <p className="mt-2 text-xs text-gray-500">
-          상위 <span className="text-gray-300 font-semibold">23%</span> ·
+          상위 <span className="text-gray-700 font-semibold">23%</span> ·
           지난주 대비{' '}
           <span className="text-ivi-accent font-semibold">+3점</span>
         </p>
@@ -212,8 +212,8 @@ export default function SafetyScoreTab() {
           const arrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '−';
 
           let changeColor = 'text-gray-500';
-          if (isImproved) changeColor = 'text-emerald-400';
-          if (isWorse) changeColor = 'text-red-400';
+          if (isImproved) changeColor = 'text-emerald-600';
+          if (isWorse) changeColor = 'text-red-600';
 
           const needsTip = item.score <= 80;
           const tipData = TIPS[item.label];
@@ -223,7 +223,7 @@ export default function SafetyScoreTab() {
             <div key={item.label} className="flex flex-col">
               <div
                 className={`bg-ivi-surfaceLight rounded-xl p-4 border flex items-center gap-3 relative
-                  ${isTipOpen ? 'border-amber-500/40 rounded-b-none' : 'border-white/[0.06]'}`}
+                  ${isTipOpen ? 'border-amber-500/40 rounded-b-none' : 'border-gray-200'}`}
               >
                 {/* 미니 ScoreRing */}
                 <ScoreRing score={item.score} size={48} />
@@ -234,7 +234,7 @@ export default function SafetyScoreTab() {
                     {item.icon} {item.label}
                   </span>
 
-                  <span className="text-lg font-bold text-gray-100 leading-tight">
+                  <span className="text-lg font-bold text-gray-900 leading-tight">
                     {item.value}
                     <span className="text-[10px] font-normal text-gray-500 ml-0.5">
                       {item.unit}
@@ -244,7 +244,7 @@ export default function SafetyScoreTab() {
                   <span className={`text-[10px] font-medium leading-tight ${changeColor}`}>
                     {arrow} {absDiff}
                     {item.unit}{' '}
-                    <span className="text-gray-600 font-normal">vs 지난주</span>
+                    <span className="text-gray-400 font-normal">vs 지난주</span>
                   </span>
                 </div>
 
@@ -275,14 +275,14 @@ export default function SafetyScoreTab() {
                   <div className="expand-inner">
                     <div className="bg-gradient-to-b from-amber-500/10 to-amber-500/5
                       border border-t-0 border-amber-500/40 rounded-b-xl px-3 py-3">
-                      <p className="text-[11px] font-bold text-amber-400 mb-1.5">
+                      <p className="text-[11px] font-bold text-amber-600 mb-1.5">
                         💡 {tipData.title}
                       </p>
                       <ul className="space-y-1.5">
                         {tipData.tips.map((tip, i) => (
                           <li
                             key={i}
-                            className="flex gap-1.5 text-[10px] text-gray-400 leading-relaxed"
+                            className="flex gap-1.5 text-[10px] text-gray-500 leading-relaxed"
                           >
                             <span className="text-amber-500/70 mt-0.5 shrink-0">•</span>
                             <span>{tip}</span>
@@ -299,22 +299,22 @@ export default function SafetyScoreTab() {
       </div>
 
       {/* ── 3. ADAS 사용시간 ── */}
-      <div className="rounded-xl border border-white/[0.06] overflow-hidden"
-        style={{ background: 'linear-gradient(180deg, #141c2e 0%, #111827 100%)' }}
+      <div className="rounded-xl border border-gray-200 overflow-hidden"
+        style={{ background: 'linear-gradient(180deg, #F9FAFB 0%, #F3F4F6 100%)' }}
       >
         {/* 헤더 */}
         <div className="px-4 pt-4 pb-2 flex items-center gap-2">
           <span className="text-base">🛞</span>
-          <h3 className="text-sm font-bold text-gray-100">ADAS 사용시간</h3>
-          <span className="text-[10px] text-gray-600 ml-auto">이번 주 누적</span>
+          <h3 className="text-sm font-bold text-gray-900">ADAS 사용시간</h3>
+          <span className="text-[10px] text-gray-400 ml-auto">이번 주 누적</span>
         </div>
 
         {/* 3-컬럼 카드 */}
-        <div className="grid grid-cols-3 gap-px bg-white/[0.04] mx-3 mb-4 rounded-lg overflow-hidden">
+        <div className="grid grid-cols-3 gap-px bg-gray-100 mx-3 mb-4 rounded-lg overflow-hidden">
           {/* LFA */}
           <div className="bg-ivi-surface flex flex-col items-center py-4 px-2 gap-2">
             {/* 심볼: 차선유지 */}
-            <div className="w-10 h-10 rounded-full bg-sky-500/15 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-sky-50 flex items-center justify-center">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4 20 L8 4" />
                 <path d="M16 20 L20 4" />
@@ -323,13 +323,13 @@ export default function SafetyScoreTab() {
               </svg>
             </div>
             <div className="text-center">
-              <p className="text-[10px] text-sky-400 font-bold tracking-wide">LFA</p>
+              <p className="text-[10px] text-sky-600 font-bold tracking-wide">LFA</p>
               <p className="text-[9px] text-gray-500 leading-tight">차선유지</p>
             </div>
-            <p className="text-xl font-extrabold text-gray-100 leading-none">2.8
+            <p className="text-xl font-extrabold text-gray-900 leading-none">2.8
               <span className="text-[10px] font-normal text-gray-500">h</span>
             </p>
-            <p className="text-[9px] text-emerald-400 font-medium">▲ 0.5h vs 지난주</p>
+            <p className="text-[9px] text-emerald-600 font-medium">▲ 0.5h vs 지난주</p>
           </div>
 
           {/* HDA */}
@@ -343,13 +343,13 @@ export default function SafetyScoreTab() {
               </svg>
             </div>
             <div className="text-center">
-              <p className="text-[10px] text-violet-400 font-bold tracking-wide">HDA</p>
+              <p className="text-[10px] text-violet-600 font-bold tracking-wide">HDA</p>
               <p className="text-[9px] text-gray-500 leading-tight">고속도로 지원</p>
             </div>
-            <p className="text-xl font-extrabold text-gray-100 leading-none">1.5
+            <p className="text-xl font-extrabold text-gray-900 leading-none">1.5
               <span className="text-[10px] font-normal text-gray-500">h</span>
             </p>
-            <p className="text-[9px] text-emerald-400 font-medium">▲ 0.3h vs 지난주</p>
+            <p className="text-[9px] text-emerald-600 font-medium">▲ 0.3h vs 지난주</p>
           </div>
 
           {/* 스마트 크루즈 */}
@@ -368,19 +368,19 @@ export default function SafetyScoreTab() {
               <p className="text-[10px] text-ivi-accent font-bold tracking-wide">SCC</p>
               <p className="text-[9px] text-gray-500 leading-tight">스마트 크루즈</p>
             </div>
-            <p className="text-xl font-extrabold text-gray-100 leading-none">3.2
+            <p className="text-xl font-extrabold text-gray-900 leading-none">3.2
               <span className="text-[10px] font-normal text-gray-500">h</span>
             </p>
-            <p className="text-[9px] text-red-400 font-medium">▼ 0.8h vs 지난주</p>
+            <p className="text-[9px] text-red-600 font-medium">▼ 0.8h vs 지난주</p>
           </div>
         </div>
 
         {/* 총 사용시간 요약 바 */}
-        <div className="mx-3 mb-4 rounded-lg bg-white/[0.03] px-3 py-2 flex items-center justify-between">
+        <div className="mx-3 mb-4 rounded-lg bg-gray-50 px-3 py-2 flex items-center justify-between">
           <span className="text-[11px] text-gray-500">총 ADAS 사용시간</span>
-          <span className="text-sm font-bold text-gray-200">
+          <span className="text-sm font-bold text-gray-800">
             7.5<span className="text-[10px] font-normal text-gray-500 ml-0.5">시간</span>
-            <span className="text-[10px] font-normal text-gray-600 ml-1.5">
+            <span className="text-[10px] font-normal text-gray-400 ml-1.5">
               / 주행시간의 <span className="text-ivi-accent font-semibold">150%</span>
             </span>
           </span>
@@ -389,15 +389,15 @@ export default function SafetyScoreTab() {
 
       {/* ── 4. 보험 연계 혜택 카드 ── */}
       <div
-        className="rounded-xl p-5 border border-white/[0.06]"
+        className="rounded-xl p-5 border border-gray-200"
         style={{
-          background: 'linear-gradient(135deg, #111d33 0%, #0f1a2e 100%)',
+          background: 'linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%)',
         }}
       >
         <div className="flex items-center gap-2.5 mb-1">
           <span className="text-xl">🛡️</span>
           <div>
-            <h3 className="text-sm font-bold text-gray-100">보험 연계 혜택</h3>
+            <h3 className="text-sm font-bold text-gray-900">보험 연계 혜택</h3>
             <p className="text-[11px] text-gray-500">
               안전점수 기반 UBI 보험 할인
             </p>
@@ -420,14 +420,14 @@ export default function SafetyScoreTab() {
               >
                 -{ins.discount}%
               </span>
-              <span className="text-[11px] text-gray-400 font-medium text-center leading-tight">
+              <span className="text-[11px] text-gray-500 font-medium text-center leading-tight">
                 {ins.name}
               </span>
             </div>
           ))}
         </div>
 
-        <p className="mt-3 text-[10px] text-gray-600 text-center">
+        <p className="mt-3 text-[10px] text-gray-400 text-center">
           * 할인율은 안전점수와 주행 이력에 따라 변동될 수 있습니다
         </p>
       </div>

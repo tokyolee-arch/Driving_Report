@@ -15,7 +15,7 @@ export default function ImpactCard({ impact, typeColor }: ImpactCardProps) {
       <p className="text-[10px] font-semibold mb-1" style={{ color: typeColor }}>
         💰 영향 분석
       </p>
-      <p className="text-xs text-gray-300 leading-relaxed">{impact}</p>
+      <p className="text-xs text-gray-700 leading-relaxed">{impact}</p>
     </div>
   );
 }

@@ -24,10 +24,10 @@ export default function TripCard({
   const noTrip = trip.distance === 0 && trip.duration === 0;
 
   return (
-    <div className="bg-ivi-surfaceLight rounded-xl p-4 border border-white/[0.06]">
+    <div className="bg-ivi-surfaceLight rounded-xl p-4 border border-gray-200">
       {/* ── 상단: 제목 + Badge ── */}
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-bold text-gray-100">
+        <h3 className="text-sm font-bold text-gray-900">
           {isToday
             ? '🚗 오늘 주행'
             : `🚗 ${dateLabel} (${dayLabel}) 주행`}
@@ -48,7 +48,7 @@ export default function TripCard({
           <span className="text-2xl">🅿️</span>
           <p className="text-sm text-gray-500">이 날은 주행 기록이 없습니다</p>
           {trip.safetyScore > 0 && (
-            <p className="text-[11px] text-gray-600">
+            <p className="text-[11px] text-gray-400">
               누적 안전점수 <span className="text-ivi-accent font-semibold">{trip.safetyScore}점</span>
             </p>
           )}
@@ -63,8 +63,8 @@ export default function TripCard({
               <div className="w-2.5 h-2.5 rounded-full border-2 border-ivi-info shadow-[0_0_6px_rgba(59,130,246,0.3)]" />
             </div>
             <div className="flex flex-col justify-between min-h-[44px]">
-              <span className="text-sm font-semibold text-gray-100">{trip.from}</span>
-              <span className="text-sm font-semibold text-gray-100">{trip.to}</span>
+              <span className="text-sm font-semibold text-gray-900">{trip.from}</span>
+              <span className="text-sm font-semibold text-gray-900">{trip.to}</span>
             </div>
           </div>
 
@@ -101,7 +101,7 @@ function MetricCell({ icon, label, value, unit, sub }: MetricCellProps) {
   return (
     <div className="bg-ivi-bg rounded-lg p-2.5 flex flex-col items-center gap-1">
       <span className="text-xs">{icon}</span>
-      <span className="text-[13px] font-bold text-gray-100 leading-tight">
+      <span className="text-[13px] font-bold text-gray-900 leading-tight">
         {value}
         {unit && (
           <span className="text-[10px] font-normal text-gray-500 ml-0.5">
@@ -112,7 +112,7 @@ function MetricCell({ icon, label, value, unit, sub }: MetricCellProps) {
       {sub ? (
         <span className="text-[10px] text-ivi-accent font-medium">{sub}</span>
       ) : (
-        <span className="text-[10px] text-gray-600">{label}</span>
+        <span className="text-[10px] text-gray-400">{label}</span>
       )}
     </div>
   );

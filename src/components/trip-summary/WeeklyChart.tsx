@@ -21,7 +21,6 @@ const METRICS: MetricDef[] = [
   { label: '주행거리', unit: 'km', color: '#a78bfa', key: 'distance' },
   { label: '평균연비', unit: 'kWh', color: '#00d4aa', key: 'efficiency', lowerBetter: true },
   { label: '에너지 소모', unit: 'kWh', color: '#3b82f6', key: 'consumption' },
-  { label: '에코드라이빙', unit: '%', color: '#10b981', key: 'ecoScore', graded: true },
   { label: '운전점수', unit: '점', color: '#f59e0b', key: 'safetyScore', graded: true },
 ];
 
@@ -98,10 +97,10 @@ export default function WeeklyChart({
   // 하단 요약 계산 (주행 없는 날 0 값은 평균/최고에서 제외)
   const summary = useMemo(() => {
     const selected = values[selectedDay];
-    const isNoTrip = metricIndex !== 4 && selected === 0; // 운전점수 제외, 0이면 주행 없음
+    const isNoTrip = metricIndex !== 3 && selected === 0; // 운전점수 제외, 0이면 주행 없음
 
     // 0이 아닌 값만 필터 (운전점수는 제외)
-    const activeValues = metricIndex === 4
+    const activeValues = metricIndex === 3
       ? values
       : values.filter((v) => v > 0);
     const total = activeValues.reduce((a, b) => a + b, 0);
@@ -135,12 +134,6 @@ export default function WeeklyChart({
         return [
           { label: '주간 평균', value: `${avg.toFixed(0)}점` },
           { label: '최고 점수', value: `${best.toFixed(0)}점` },
-          { label: '선택일', value: selStr ?? `${selected.toFixed(0)}점` },
-        ];
-      case 4:
-        return [
-          { label: '주간 평균', value: `${avg.toFixed(0)}점` },
-          { label: '최고 점수', value: `${best.toFixed(0)}점` },
           { label: '선택일', value: `${selected.toFixed(0)}점` },
         ];
       default:
@@ -148,8 +141,8 @@ export default function WeeklyChart({
     }
   }, [metricIndex, values, selectedDay, metric.lowerBetter]);
 
-  const isIntMetric = metricIndex >= 3;
-  const isLineChart = metricIndex === 4; // 운전점수는 꺾은선 그래프
+  const isIntMetric = metricIndex === 3;
+  const isLineChart = metricIndex === 3; // 운전점수는 꺾은선 그래프
 
   // ── 꺾은선 그래프용 좌표 계산 ──
   const lineChartData = useMemo(() => {
@@ -178,9 +171,9 @@ export default function WeeklyChart({
   }, [isLineChart, values]);
 
   return (
-    <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-white/[0.06]">
+    <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-gray-200">
       {/* 제목 */}
-      <h3 className="text-sm font-bold text-gray-100 mb-3">📊 주간 주행 현황</h3>
+      <h3 className="text-sm font-bold text-gray-900 mb-3">📊 주간 주행 현황</h3>
 
       {/* Pill Selector */}
       <PillSelector
@@ -213,7 +206,7 @@ export default function WeeklyChart({
                 y1={lineChartData.padTop + lineChartData.chartH * (1 - r)}
                 x2="370"
                 y2={lineChartData.padTop + lineChartData.chartH * (1 - r)}
-                stroke="rgba(255,255,255,0.04)"
+                stroke="rgba(0,0,0,0.06)"
                 strokeWidth="1"
               />
             ))}
@@ -295,7 +288,7 @@ export default function WeeklyChart({
                     cx={p.x}
                     cy={p.y}
                     r={isSelected ? 5 : 3.5}
-                    fill={isSelected ? pointColor : '#1f2937'}
+                    fill={isSelected ? pointColor : '#e5e7eb'}
                     stroke={pointColor}
                     strokeWidth={isSelected ? 2.5 : 1.5}
                     style={isSelected ? {
@@ -325,7 +318,7 @@ export default function WeeklyChart({
                   ) : (
                     <span
                       className={`text-[10px] font-medium ${
-                        isSelected ? 'text-gray-200' : 'text-gray-600'
+                        isSelected ? 'text-gray-800' : 'text-gray-400'
                       }`}
                     >
                       {DAY_LABELS[i]}
@@ -333,7 +326,7 @@ export default function WeeklyChart({
                   )}
                   <span
                     className={`text-[8px] ${
-                      isSelected ? 'text-gray-400' : 'text-gray-700'
+                      isSelected ? 'text-gray-500' : 'text-gray-400'
                     }`}
                   >
                     {dateLabels[i]}
@@ -402,7 +395,7 @@ export default function WeeklyChart({
                   ) : (
                     <span
                       className={`text-[10px] font-medium ${
-                        isSelected ? 'text-gray-200' : 'text-gray-600'
+                        isSelected ? 'text-gray-800' : 'text-gray-400'
                       }`}
                     >
                       {DAY_LABELS[i]}
@@ -410,7 +403,7 @@ export default function WeeklyChart({
                   )}
                   <span
                     className={`text-[8px] ${
-                      isSelected ? 'text-gray-400' : 'text-gray-700'
+                      isSelected ? 'text-gray-500' : 'text-gray-400'
                     }`}
                   >
                     {dateLabels[i]}
@@ -423,11 +416,11 @@ export default function WeeklyChart({
       )}
 
       {/* ── 하단 요약 3칸 ── */}
-      <div className="mt-4 pt-3 border-t border-white/[0.04] grid grid-cols-3 gap-2">
+      <div className="mt-4 pt-3 border-t border-gray-200 grid grid-cols-3 gap-2">
         {summary.map((item, i) => (
           <div key={i} className="flex flex-col items-center gap-0.5">
-            <span className="text-[10px] text-gray-600">{item.label}</span>
-            <span className="text-sm font-bold text-gray-200">{item.value}</span>
+            <span className="text-[10px] text-gray-400">{item.label}</span>
+            <span className="text-sm font-bold text-gray-800">{item.value}</span>
           </div>
         ))}
       </div>

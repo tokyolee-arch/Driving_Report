@@ -46,10 +46,10 @@ export default function EventTimeline({
   const isPerfect = hasEvents === false || (counts.warn === 0 && counts.danger === 0);
 
   return (
-    <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-white/[0.06]">
+    <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-gray-200">
       {/* ── 헤더 ── */}
       <div className="flex items-center justify-between mb-1">
-        <h3 className="text-sm font-bold text-gray-100">
+        <h3 className="text-sm font-bold text-gray-900">
           📋 {dateLabel} ({dayLabel}) 주행 이벤트
         </h3>
         {warnTotal > 0 && (
@@ -61,7 +61,7 @@ export default function EventTimeline({
       <div className="flex items-center justify-between mb-4">
         <p className="text-[11px] text-gray-500">{tripRoute}</p>
         {hasEvents && (
-          <p className="text-[10px] text-gray-600">항목을 눌러 상세 보기</p>
+          <p className="text-[10px] text-gray-400">항목을 눌러 상세 보기</p>
         )}
       </div>
 
@@ -87,7 +87,7 @@ export default function EventTimeline({
       )}
 
       {/* ── 하단 뱃지 요약 ── */}
-      <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-center gap-2 flex-wrap">
+      <div className="mt-4 pt-3 border-t border-gray-200 flex items-center justify-center gap-2 flex-wrap">
         {isPerfect && hasEvents ? (
           <Badge text="✨ 무결점 주행" color="#00d4aa" />
         ) : isPerfect && !hasEvents ? null : (

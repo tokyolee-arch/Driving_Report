@@ -7,7 +7,7 @@ interface SpeedGraphProps {
 
 export default function SpeedGraph({ data, color }: SpeedGraphProps) {
   return (
-    <div className="bg-ivi-bg rounded-lg p-3 border border-white/[0.04]">
+    <div className="bg-ivi-bg rounded-lg p-3 border border-gray-200">
       <p className="text-[10px] text-gray-500 mb-2">⚡ 속도 변화 그래프</p>
 
       <div className="relative h-16">
@@ -24,7 +24,7 @@ export default function SpeedGraph({ data, color }: SpeedGraphProps) {
               y1={y}
               x2="100"
               y2={y}
-              stroke="rgba(255,255,255,0.04)"
+              stroke="rgba(0,0,0,0.06)"
               strokeWidth="0.5"
             />
           ))}

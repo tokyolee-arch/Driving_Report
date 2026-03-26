@@ -41,9 +41,9 @@ export default function VehicleValueTab() {
     <div className="flex flex-col gap-3">
       {/* ── 1. Vehicle Trust Grade 히어로 ── */}
       <div
-        className="rounded-xl p-6 border border-white/[0.06] flex flex-col items-center"
+        className="rounded-xl p-6 border border-gray-200 flex flex-col items-center"
         style={{
-          background: 'linear-gradient(180deg, #111d33 0%, #0f1a2e 100%)',
+          background: 'linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%)',
         }}
       >
         <p className="text-[10px] text-gray-500 tracking-[0.25em] font-semibold mb-5">
@@ -91,7 +91,7 @@ export default function VehicleValueTab() {
           <Badge text={`CERTIFIED ${gradeInfo.label}`} color={gradeInfo.color} />
         </div>
 
-        <p className="mt-2 text-[10px] text-gray-600">
+        <p className="mt-2 text-[10px] text-gray-400">
           블록체인 인증 완료 · 데이터 무결성 검증됨
         </p>
       </div>
@@ -101,13 +101,13 @@ export default function VehicleValueTab() {
         {VEHICLE_INFO.map((m) => (
           <div
             key={m.label}
-            className="bg-ivi-surfaceLight rounded-xl px-4 py-3 border border-white/[0.06]"
+            className="bg-ivi-surfaceLight rounded-xl px-4 py-3 border border-gray-200"
           >
             <div className="flex items-center gap-1.5 mb-1">
               <span className="text-xs">{m.icon}</span>
               <span className="text-[10px] text-gray-500">{m.label}</span>
             </div>
-            <p className="text-lg font-bold text-gray-100 leading-tight">
+            <p className="text-lg font-bold text-gray-900 leading-tight">
               {m.value}
               {m.unit && (
                 <span className="text-[10px] font-normal text-gray-500 ml-0.5">
@@ -120,8 +120,8 @@ export default function VehicleValueTab() {
       </div>
 
       {/* ── 3. 차량 신뢰 지표 (하나의 블록) ── */}
-      <div className="bg-ivi-surfaceLight rounded-xl p-4 border border-white/[0.06]">
-        <h3 className="text-sm font-bold text-gray-100 mb-3">
+      <div className="bg-ivi-surfaceLight rounded-xl p-4 border border-gray-200">
+        <h3 className="text-sm font-bold text-gray-900 mb-3">
           🏅 차량 신뢰 지표
         </h3>
         <div className="grid grid-cols-4 gap-2">
@@ -133,7 +133,7 @@ export default function VehicleValueTab() {
               >
                 {m.icon}
               </div>
-              <p className="text-lg font-extrabold text-gray-100 leading-none">
+              <p className="text-lg font-extrabold text-gray-900 leading-none">
                 {m.value}
                 {m.unit && (
                   <span className="text-[9px] font-normal text-gray-500">{m.unit}</span>
@@ -146,8 +146,8 @@ export default function VehicleValueTab() {
       </div>
 
       {/* ── 3. 예상 시세 카드 ── */}
-      <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-white/[0.06]">
-        <h3 className="text-sm font-bold text-gray-100 mb-4">
+      <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-gray-200">
+        <h3 className="text-sm font-bold text-gray-900 mb-4">
           💎 예상 시세
         </h3>
 
@@ -167,7 +167,7 @@ export default function VehicleValueTab() {
 
         <p className="text-center text-[11px] text-gray-500 mb-4">
           잔존 가치율{' '}
-          <span className="text-gray-300 font-semibold">72%</span> · 동급 평균
+          <span className="text-gray-700 font-semibold">72%</span> · 동급 평균
           대비{' '}
           <span className="text-ivi-accent font-semibold">+8%</span>
         </p>
@@ -181,8 +181,8 @@ export default function VehicleValueTab() {
       </div>
 
       {/* ── 4. 가치 상승 요인 카드 ── */}
-      <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-white/[0.06]">
-        <h3 className="text-sm font-bold text-gray-100 mb-3">
+      <div className="bg-ivi-surfaceLight rounded-xl p-5 border border-gray-200">
+        <h3 className="text-sm font-bold text-gray-900 mb-3">
           📈 가치 상승 요인
         </h3>
 
@@ -194,7 +194,7 @@ export default function VehicleValueTab() {
             >
               <div className="flex items-center gap-2 min-w-0">
                 <span className="text-ivi-accent text-[10px]">✦</span>
-                <span className="text-xs text-gray-300 truncate">
+                <span className="text-xs text-gray-700 truncate">
                   {f.factor}
                 </span>
               </div>
@@ -206,7 +206,7 @@ export default function VehicleValueTab() {
         </div>
 
         {/* 합산 */}
-        <div className="mt-3 pt-3 border-t border-white/[0.04] flex items-center justify-between">
+        <div className="mt-3 pt-3 border-t border-gray-200 flex items-center justify-between">
           <span className="text-xs text-gray-500">총 가치 상승 효과</span>
           <span className="text-sm font-extrabold text-ivi-accent">+415만원</span>
         </div>
@@ -227,15 +227,15 @@ export default function VehicleValueTab() {
           📄 리포트 공유
         </button>
 
-        {/* 중고차 플랫폼 등록 (outline) */}
+        {/* 매물 등록 (outline) */}
         <button
-          aria-label="중고차 플랫폼 연동하기"
+          aria-label="매물 등록하기"
           className="flex-1 py-3 rounded-xl text-sm font-bold
-                     border border-white/[0.12] text-gray-300
-                     bg-white/[0.02] hover:bg-white/[0.06]
+                     border border-gray-200 text-gray-700
+                     bg-gray-50 hover:bg-gray-100
                      transition-all duration-200 active:scale-[0.98]"
         >
-          🔗 중고차 플랫폼 등록
+          🔗 매물 등록
         </button>
       </div>
     </div>
@@ -257,13 +257,13 @@ function PriceCell({ label, value, highlighted, muted }: PriceCellProps) {
       className={`rounded-lg p-2.5 text-center border ${
         highlighted
           ? 'bg-ivi-accent/[0.08] border-ivi-accent/20'
-          : 'bg-ivi-bg border-white/[0.04]'
+          : 'bg-ivi-bg border-gray-200'
       }`}
     >
       <p className="text-[9px] text-gray-500 mb-1">{label}</p>
       <p
         className={`text-[11px] font-bold leading-tight ${
-          muted ? 'text-gray-400' : 'text-ivi-accent'
+          muted ? 'text-gray-500' : 'text-ivi-accent'
         }`}
       >
         {value}

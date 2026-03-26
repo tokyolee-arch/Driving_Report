@@ -12,9 +12,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         ivi: {
-          bg: "#0a0e17",
-          surface: "#111827",
-          surfaceLight: "#1a2235",
+          bg: "#FFFFFF",
+          surface: "#F9FAFB",
+          surfaceLight: "#F3F4F6",
           accent: "#00d4aa",
           warning: "#f59e0b",
           danger: "#ef4444",

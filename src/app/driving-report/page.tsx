@@ -77,15 +77,15 @@ export default function DrivingReportPage() {
   return (
     <div className="w-full min-h-screen bg-ivi-bg flex flex-col">
       {/* ── Header (sticky) ── */}
-      <header className="sticky top-0 z-30 bg-ivi-bg/80 backdrop-blur-md border-b border-white/[0.04]">
+      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="px-5 pt-4 pb-3">
           <div className="flex items-center justify-between">
             {/* 좌측 */}
             <div>
-              <p className="text-[9px] text-gray-600 tracking-[0.2em] font-medium">
+              <p className="text-[9px] text-gray-400 tracking-[0.2em] font-medium">
                 DRIVING REPORT
               </p>
-              <h1 className="text-base font-bold text-gray-100 -mt-0.5">
+              <h1 className="text-base font-bold text-gray-900 -mt-0.5">
                 주행 리포트
               </h1>
             </div>
@@ -131,7 +131,7 @@ export default function DrivingReportPage() {
                     ${
                       isActive
                         ? 'text-ivi-accent'
-                        : 'text-gray-500 hover:text-gray-400'
+                        : 'text-gray-400 hover:text-gray-600'
                     }
                   `}
                   style={
@@ -180,7 +180,7 @@ export default function DrivingReportPage() {
 
       {/* ── Footer ── */}
       <footer className="px-5 py-4 text-center">
-        <p className="text-[9px] text-gray-700">
+        <p className="text-[9px] text-gray-400">
           차량 VIN: KMH●●●●●●●●35820 · Blockchain Verified
         </p>
       </footer>

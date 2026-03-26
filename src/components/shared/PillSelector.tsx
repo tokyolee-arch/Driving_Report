@@ -28,12 +28,12 @@ export default function PillSelector({
             aria-label={`${label} 메트릭`}
             onClick={() => onChange(i)}
             className={`
-              flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium
+              flex-1 px-2 py-1.5 rounded-full text-xs font-medium text-center
               transition-all duration-200 whitespace-nowrap
               ${
                 isActive
-                  ? 'bg-ivi-accent text-black font-semibold shadow-[0_2px_12px_rgba(0,212,170,0.25)]'
-                  : 'bg-white/[0.04] text-gray-500 border border-white/[0.06] hover:bg-white/[0.08] hover:text-gray-300'
+                  ? 'bg-gray-900 text-white font-bold shadow-[0_2px_8px_rgba(0,0,0,0.12)]'
+                  : 'bg-gray-100 text-gray-500 border border-gray-200 hover:bg-gray-200 hover:text-gray-700'
               }
             `}
           >

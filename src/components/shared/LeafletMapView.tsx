@@ -103,19 +103,19 @@ export default function LeafletMapView({ lat, lng, label, address }: LeafletMapV
   }, [lat, lng]);
 
   return (
-    <div className="rounded-xl overflow-hidden border border-white/[0.06] w-full">
+    <div className="rounded-xl overflow-hidden border border-gray-200 w-full">
       {/* 지도 영역 */}
       <div className="relative w-full" style={{ height: '140px' }}>
         <div
           ref={containerRef}
           className="absolute inset-0 w-full h-full"
-          style={{ background: '#1a1d23' }}
+          style={{ background: '#F3F4F6' }}
         />
 
         {/* 로딩 오버레이 */}
         {!ready && !error && (
           <div className="absolute inset-0 z-10 bg-ivi-surface flex flex-col items-center justify-center gap-1.5">
-            <div className="w-6 h-6 border-2 border-gray-600 border-t-ivi-accent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-gray-400 border-t-ivi-accent rounded-full animate-spin" />
             <span className="text-xs text-gray-500">지도 로딩 중…</span>
           </div>
         )}
@@ -131,9 +131,9 @@ export default function LeafletMapView({ lat, lng, label, address }: LeafletMapV
 
       {/* 하단 정보 */}
       <div className="px-3 py-2.5 bg-ivi-surfaceLight space-y-0.5">
-        <p className="text-sm font-semibold text-gray-200">{label}</p>
+        <p className="text-sm font-semibold text-gray-800">{label}</p>
         <p className="text-xs text-gray-500">{address}</p>
-        <p className="text-[10px] text-gray-600 font-mono">
+        <p className="text-[10px] text-gray-400 font-mono">
           {lat.toFixed(4)}, {lng.toFixed(4)}
         </p>
       </div>

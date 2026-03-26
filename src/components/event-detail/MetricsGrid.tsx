@@ -10,12 +10,12 @@ export default function MetricsGrid({ metrics }: MetricsGridProps) {
       {metrics.map((m, i) => (
         <div
           key={i}
-          className="flex-1 min-w-[80px] bg-ivi-bg rounded-lg px-3 py-2.5 border border-white/[0.04]"
+          className="flex-1 min-w-[80px] bg-ivi-bg rounded-lg px-3 py-2.5 border border-gray-200"
         >
           <p className="text-[10px] text-gray-500 mb-0.5">{m.label}</p>
           <p
             className="text-sm font-bold leading-tight"
-            style={{ color: m.color ?? '#e5e7eb' }}
+            style={{ color: m.color ?? '#111827' }}
           >
             {m.value}
           </p>

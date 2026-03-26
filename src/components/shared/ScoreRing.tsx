@@ -35,7 +35,7 @@ export default function ScoreRing({ score, size, color }: ScoreRingProps) {
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,0.06)"
+          stroke="rgba(0,0,0,0.08)"
           strokeWidth={strokeWidth}
         />
         {/* 점수 링 */}
@@ -62,7 +62,7 @@ export default function ScoreRing({ score, size, color }: ScoreRingProps) {
           className="font-extrabold leading-none"
           style={{
             fontSize: size * 0.28,
-            color: '#fff',
+            color: '#111827',
           }}
         >
           {animatedScore}
